@@ -1,0 +1,67 @@
+{
+  "_comment": "Manual corrections applied on top of the data pulled from mezzagurme.com. Keys under 'items' are menu numbers.",
+
+  "featured": [
+    { "n": 32,  "badge": "star" },
+    { "n": 127, "badge": "popular", "img": "assets/img/featured-bowl.webp" },
+    { "n": 20 },
+    { "n": 110 },
+    { "n": 96 },
+    { "n": 93 },
+    { "n": 145 }
+  ],
+
+  "variantCategories": ["Sert İçecekler", "Rakılar"],
+
+  "_allergenFilters": "Turn on 'no gluten / no milk / ...' search filters once every dish has its allergens filled in.",
+  "allergenFilters": false,
+
+  "replace": [
+    ["Rıvıera Gın", "Riviera Gin"],
+    ["Teqila", "Tequila"],
+    ["Negrony", "Negroni"],
+    ["Artoıs", "Artois"],
+    ["Caffee ", "Caffe "],
+    ["Şişe50", "Şişe 50"],
+    ["J\\.w\\.? ", "J.W. "],
+    ["(\\d)\\s*Cl\\b", "\\1 cl"],
+    ["(\\d)cl\\b", "\\1 cl"],
+    ["Screamble", "Scrambled"],
+    ["[Mm]oz+[ae]r+[ae]l+a", "mozzarella"],
+    ["baharatlarlar", "baharatlarla"],
+    ["\\(\\s*EN AZ 2 KİŞİLİKTİR\\.?\\s*\\)", "(En az 2 kişiliktir.)"],
+    ["\\(\\s*SADECE PAZAR GÜNÜ\\s*\\)", "(Sadece pazar günü)"],
+    ["\\(\\s*MINDESTENS FÜR 2 PERSONEN\\s*\\)", "(mindestens für 2 Personen)"],
+    ["\\(\\s*NUR SONNTAGS\\s*\\)", "(nur sonntags)"]
+  ],
+
+  "items": {
+    "40":  { "tr": { "desc": "Ekşi mayalı siyez ekmeği, ezine beyaz peynir, siyah & yeşil zeytin, domates ve yeşillik ile. (Patates kızartması için garsona bilgi veriniz.)" },
+             "de": { "desc": "Einkorn-Sauerteigbrot mit Ezine-Weißkäse, schwarzen & grünen Oliven, Tomaten und frischen Kräutern. (Pommes frites bitte beim Service bestellen.)" } },
+    "246": { "tr": { "desc": "2 Red Bull, 2 San Pellegrino ve meyve tabağı ile." } },
+    "247": { "tr": { "desc": "2 Red Bull, 2 San Pellegrino ve meyve tabağı ile." } },
+    "248": { "tr": { "desc": "2 Red Bull, 2 San Pellegrino ve meyve tabağı ile." } },
+    "249": { "tr": { "desc": "1 Sprite, 1 Coca-Cola, 1 San Pellegrino, 1 Red Bull ve meyve tabağı ile." } },
+    "55":  { "de": { "desc": "Bitte fragen Sie unser Servicepersonal!" } },
+    "83":  { "ru": { "name": "Таратор из моркови (с йогуртом и чесноком)" } },
+    "171": { "en": { "name": "Günseven Şalgam (Turnip Juice)" }, "ru": { "name": "Шалгам Günseven (морковно-репный сок)" }, "pl": { "name": "Şalgam Günseven (sok z rzepy)" }, "de": { "name": "Günseven Şalgam (Rübensaft)" } },
+    "214": { "de": { "name": "Snack-Mix" } },
+    "318": { "en": { "name": "Eucalyptus Tea" }, "ru": { "name": "Эвкалиптовый чай" }, "pl": { "name": "Herbata eukaliptusowa" }, "de": { "name": "Eukalyptustee" } },
+    "319": { "en": { "name": "Lavender Tea" }, "ru": { "name": "Лавандовый чай" }, "pl": { "name": "Herbata lawendowa" }, "de": { "name": "Lavendeltee" } },
+    "320": { "en": { "name": "Fennel Tea" }, "ru": { "name": "Фенхелевый чай" }, "pl": { "name": "Herbata z kopru włoskiego" }, "de": { "name": "Fencheltee" } },
+    "321": { "en": { "name": "Kızılay Lemon Soda" }, "ru": { "name": "Содовая Kızılay с лимоном" }, "pl": { "name": "Woda gazowana Kızılay z cytryną" }, "de": { "name": "Kızılay Mineralwasser mit Zitrone" } }
+  },
+
+  "contact": {
+    "phone": "+90 553 956 32 04",
+    "phoneHref": "+905539563204",
+    "whatsapp": "905539563204",
+    "email": "info@mezzanatural.com",
+    "instagram": "mezzagurme",
+    "instagramMarket": "mezzanatural",
+    "tripadvisor": "https://www.tripadvisor.com.tr/Restaurant_Review-g297961-d8572923-Reviews-Mezza_Gurme_Market_Restorant-Alanya_Turkish_Mediterranean_Coast.html",
+    "website": "https://mezzagurme.com",
+    "open": "10:00",
+    "close": "23:00"
+  }
+}

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masa QR kartları · Mezza Gurme</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../favicon.ico">
+<link rel="stylesheet" href="../assets/css/fonts.css">
+<style>
+  :root { --ink: #0b1410; --teal: #1f9d96; --gold: #b0844a; --paper: #fff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9e6df; color: var(--ink); font: 15px/1.5 'Inter', system-ui, sans-serif; }
+  .panel {
+    position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 20px;
+    padding: 16px 24px; background: #0b1410; color: #ebe7dc;
+  }
+  .panel h1 { width: 100%; margin: 0 0 4px; font: 500 26px 'Cormorant Garamond', Georgia, serif; }
+  .panel h1 small { font: 400 13px 'Inter', sans-serif; color: #9a9488; margin-left: 10px; }
+  label { display: grid; gap: 4px; font-size: 12px; color: #bdb7aa; }
+  input, select {
+    height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(235, 231, 220, .2);
+    background: #17261f; color: #ebe7dc; font: inherit; font-size: 14px;
+  }
+  input[type=url] { width: min(440px, 80vw); }
+  input[type=number] { width: 110px; }
+  button {
+    height: 40px; padding: 0 18px; border: 0; border-radius: 10px; cursor: pointer;
+    background: #3abfb8; color: #04110d; font: 600 14px 'Inter', sans-serif;
+  }
+  .hint { width: 100%; margin: 0; font-size: 12px; color: #8e887c; }
+
+  .sheet { display: grid; grid-template-columns: repeat(2, 105mm); gap: 0; justify-content: center; padding: 24px 0; }
+  .card {
+    width: 105mm; height: 148mm; padding: 11mm 10mm 9mm; background: var(--paper);
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    outline: 1px dashed #cfcac0; outline-offset: -0.5px; break-inside: avoid;
+  }
+  .logo { height: 15mm; width: auto; filter: brightness(0); opacity: .92; }
+  .langs { margin-top: 4mm; font-size: 8.5pt; letter-spacing: .22em; text-transform: uppercase; color: var(--teal); font-weight: 600; }
+  .title { margin-top: 2mm; font: 500 25pt/1 'Cormorant Garamond', Georgia, serif; }
+  .title em { color: var(--teal); }
+  .qr { margin-top: 6mm; width: 52mm; height: 52mm; }
+  .qr svg { width: 100%; height: 100%; display: block; }
+  .table { margin-top: auto; display: flex; align-items: baseline; gap: 3mm; }
+  .table span { font-size: 8pt; letter-spacing: .3em; text-transform: uppercase; color: #6b6f69; }
+  .table b { font: 600 30pt/1 'Cormorant Garamond', Georgia, serif; font-variant-numeric: lining-nums; }
+  .scan { margin-top: 3mm; font-size: 7.5pt; color: #6b6f69; line-height: 1.45; }
+  .rule { width: 18mm; height: 1px; background: var(--gold); margin: 4mm auto 0; }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: #fff; }
+    .panel { display: none; }
+    .sheet { padding: 0; }
+    .card { outline: 1px dashed #ddd; }
+  }
+</style>
+</head>
+<body>
+  <form class="panel" id="form">
+    <h1>QR kartları · QR-таблички <small>Masa başına bir kart — гость сразу попадает в меню со своим столом</small></h1>
+    <label>Menü adresi / Адрес меню<input type="url" id="base" required></label>
+    <label>İlk masa / С&nbsp;какого стола<input type="number" id="from" min="1" max="999" value="1"></label>
+    <label>Son masa / По&nbsp;какой<input type="number" id="to" min="1" max="999" value="20"></label>
+    <label>Dil / Язык<select id="lang">
+      <option value="">Otomatik — авто (по языку телефона)</option>
+      <option value="tr">Türkçe</option><option value="en">English</option><option value="ru">Русский</option>
+      <option value="pl">Polski</option><option value="de">Deutsch</option>
+    </select></label>
+    <button type="button" id="print">Yazdır / Печать</button>
+    <p class="hint">A4, 4 kart/sayfa, kesim çizgileri ile. Otomatik dilde menü misafirin telefon diline göre açılır — в режиме «авто» меню откроется на языке телефона гостя.</p>
+  </form>
+  <main class="sheet" id="sheet"></main>
+
+<script src="qrcode.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var menuUrl = new URL('../', location.href).href;
+  $('base').value = menuUrl;
+
+  function qrSvg(text) {
+    var qr = qrcode(0, 'M');
+    qr.addData(text);
+    qr.make();
+    var n = qr.getModuleCount(), q = 2, d = '';
+    for (var r = 0; r < n; r++) {
+      for (var c = 0; c < n; c++) if (qr.isDark(r, c)) d += 'M' + (c + q) + ' ' + (r + q) + 'h1v1h-1z';
+    }
+    var s = n + q * 2;
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + s + ' ' + s + '" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path fill="#0b1410" d="' + d + '"/></svg>';
+  }
+
+  function render() {
+    var base, from = Math.max(1, +$('from').value || 1), to = Math.min(999, +$('to').value || from);
+    try { base = new URL($('base').value); } catch (e) { return; }
+    if (to < from) to = from;
+    if (to - from > 199) to = from + 199;
+    var html = '';
+    for (var t = from; t <= to; t++) {
+      var u = new URL(base.href);
+      u.searchParams.set('table', t);
+      if ($('lang').value) u.searchParams.set('lang', $('lang').value); else u.searchParams.delete('lang');
+      html += '<section class="card">' +
+        '<img class="logo" src="../assets/img/logo.webp" alt="Mezza Gurme">' +
+        '<div class="rule"></div>' +
+        '<p class="langs">TR · EN · RU · PL · DE</p>' +
+        '<p class="title">Menü <em>Menu</em></p>' +
+        '<div class="qr">' + qrSvg(u.href) + '</div>' +
+        '<p class="scan">Menü için kodu okutun · Scan for the menu<br>Наведите камеру · Zeskanuj · Code scannen</p>' +
+        '<div class="table"><span>Masa · Table</span><b>' + t + '</b></div>' +
+      '</section>';
+    }
+    $('sheet').innerHTML = html;
+  }
+
+  ['base', 'from', 'to', 'lang'].forEach(function (id) { $(id).addEventListener('input', render); });
+  $('print').addEventListener('click', function () { window.print(); });
+  $('form').addEventListener('submit', function (e) { e.preventDefault(); });
+  render();
+})();
+</script>
+</body>
+</html>
